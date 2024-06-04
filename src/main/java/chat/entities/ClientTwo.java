@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Client {
+public class ClientTwo {
     private Socket socket;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
@@ -59,16 +59,16 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        Client client = new Client();
-        Socket clientServerConnection = client.connectToServer("localhost", 8081);
+        ClientTwo clientTwo = new ClientTwo();
+        Socket clientServerConnection = clientTwo.connectToServer("localhost", 8081);
 
         if (clientServerConnection != null) {
-            client.listenForServerMessages();
+            clientTwo.listenForServerMessages();
 
             while (true) {
                 System.out.println("Enter your message");
                 String messageContent = scanner.nextLine();
-                client.sendMessageToServer(messageContent);
+                clientTwo.sendMessageToServer(messageContent);
             }
         }
     }
