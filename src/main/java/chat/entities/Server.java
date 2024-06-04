@@ -16,10 +16,21 @@ public class Server {
             while (true){
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client connected");
-                ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
 
-                Message clientRequest = (Message) objectInputStream.readObject();
-                System.out.println(clientRequest.getBody());
+                new Thread(()->{
+                    try (ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream())){
+                        Message clientReply;
+                        while ((clientReply = (Message) objectInputStream.readObject()) != null){
+                            System.out.println(clientReply.getBody());
+
+                        }
+
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+                }).start();
             }
 
 

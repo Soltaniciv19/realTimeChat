@@ -11,11 +11,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Client {
+    private ObjectOutputStream objectOutputStream;
+
     public Socket connectToServer(String serverAddress, int port) throws IOException{
         System.out.println("Connecting to server: " + serverAddress + ":" + port);
 
         try {
             Socket socket = new Socket(serverAddress,port);
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             System.out.println("Successfully connected to server!");
             return socket;
 
@@ -29,8 +32,6 @@ public class Client {
     public void sendMessageToServer(Socket socket,String content) throws IOException{
         Random random = new Random();
         Message message = new Message(random.nextInt(1001),content);
-
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         objectOutputStream.writeObject(message);
 
     }
